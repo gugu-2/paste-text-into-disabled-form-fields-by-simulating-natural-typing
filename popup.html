@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            width: 320px;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            background: #f8f9fa;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .header h2 {
+            color: #333;
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .text-input {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            box-sizing: border-box;
+            font-family: inherit;
+            background: white;
+            transition: border-color 0.2s;
+        }
+        
+        .text-input:focus {
+            border-color: #4CAF50;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+        
+        .controls {
+            margin-top: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .speed-control {
+            margin-bottom: 20px;
+        }
+        
+        .speed-control label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .speed-slider {
+            width: 100%;
+            margin-bottom: 8px;
+            height: 6px;
+            border-radius: 3px;
+            background: #e1e5e9;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .speed-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .speed-display {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        
+        .btn-primary {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background-color: #45a049;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn-primary:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .btn-secondary {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: #1976D2;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+        }
+        
+        .btn-cancel {
+            background-color: #ff9800;
+            color: white;
+        }
+        
+        .btn-cancel:hover:not(:disabled) {
+            background-color: #f57c00;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(255, 152, 0, 0.3);
+        }
+        
+        .status {
+            margin-top: 15px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 500;
+            min-height: 18px;
+            transition: all 0.3s;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .instructions {
+            margin-top: 15px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .instructions strong {
+            color: #333;
+        }
+        
+        .field-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+            background-color: #dc3545;
+            transition: background-color 0.3s;
+        }
+        
+        .field-indicator.selected {
+            background-color: #28a745;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-outline:hover:not(:disabled) {
+            background-color: #f8f9fa;
+            border-color: #adb5bd;
+            color: #495057;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>🎯 Smart Typing Paste</h2>
+    </div>
+    
+    <textarea 
+        id="textInput" 
+        class="text-input" 
+        placeholder="Enter the text you want to type..."
+    ></textarea>
+    
+    <div class="controls">
+        <div class="speed-control">
+            <label for="speedSlider">Typing Speed:</label>
+            <input 
+                type="range" 
+                id="speedSlider" 
+                class="speed-slider" 
+                min="1" 
+                max="10" 
+                value="5"
+            >
+            <div id="speedDisplay" class="speed-display">Medium Speed (50ms per character)</div>
+        </div>
+        
+        <div class="button-group">
+            <button id="selectFieldBtn" class="btn btn-secondary">
+                <span class="field-indicator" id="fieldIndicator"></span>
+                Select Field
+            </button>
+            <button id="pasteBtn" class="btn btn-primary" disabled>
+                Type Text
+            </button>
+        </div>
+        
+        <div class="button-group" style="margin-top: 10px;">
+            <button id="clearSelectionBtn" class="btn btn-outline" style="font-size: 12px; padding: 8px 12px;">
+                Clear Selection
+            </button>
+        </div>
+    </div>
+    
+    <div id="status" class="status"></div>
+    
+    <div class="instructions">
+        <strong>How to use:</strong><br>
+        1. Enter your text in the box above<br>
+        2. Click "Select Field" (button turns orange)<br>
+        3. Click on any text field on the webpage<br>
+        4. Return here and click "Type Text"<br>
+        <br>
+        <strong>Note:</strong> The popup may close when you click on the page - that's normal! Just reopen it and your field selection will be remembered.
+        <br><br>
+        <strong>Tip:</strong> Use slower speeds for secure forms, faster for regular text.
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>
